@@ -1,0 +1,60 @@
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Project View</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a>Home</a></li>
+                    <li class="breadcrumb-item active">Project</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="btn-panel">
+                <button  class="btn btn-md btn-primary btn-group mr-3" (click) = "addProject()">Add Project</button>
+            </div>
+            <div class="card-body">
+                <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                    <div class="row">
+                        <div class="card-body table-responsive p-0" style="height: 480px;">
+                            <table class="table table-bordered table-head-fixed text-nowrap">
+                                <thead>
+                                    <tr>
+                                        <th>Project Id</th>
+                                        <th>Name</th>
+                                        <th>Code</th>
+                    
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let project of projects; index as i">
+                                        <td><a class="underline" (click) = "selectProject(project.id)" title = "View Project Backlog">{{project.projectId}}</a></td>
+                                        <td>{{project.name}}</td>
+                                        <td>{{project.code}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-5">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>

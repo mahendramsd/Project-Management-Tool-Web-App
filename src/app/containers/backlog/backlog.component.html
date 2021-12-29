@@ -1,0 +1,96 @@
+<section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>Issue Backlog</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a>Project</a></li>
+            <li class="breadcrumb-item active">Issues</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  
+  
+  <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid">
+      <div class="card">
+  
+  
+  
+        <div class="card-header">
+          <div class="row">
+            <div class="col-md-1">  Filters <i class="fas fa-angle-double-right ml-2"></i> </div>
+            <div class="col-md-3">
+              <select style="width: 100%;" [(ngModel)]="selectedState" (change)="onChangeState($event.target.value)"
+                class="form-control">
+                <option value="0">Select State</option>
+                <option value="OPEN">Open</option>
+                <option value="IN_PROGRESS">In Progress</option>
+                <option value="TESTING">Testing</option>
+                <option value="DEPLOY">Deploy</option>
+              </select>
+            </div>
+            <div class="col-md-1"></div>
+            <div class="col-md-3">
+              <select style="width: 100%;" [(ngModel)]="selectedIssueType" (change)="onChangeIssueType($event.target.value)"
+              class="form-control">
+              <option value="0">Select Issue Type</option>
+              <option value="BUG">Bug</option>
+              <option value="STORY">Story</option>
+              <option value="TASK">Task</option>
+            </select>
+            </div>
+            <div class="col-md-1"></div>
+            <div class="col-md-3">
+              <select style="width: 100%;" [(ngModel)]="selectedUser" (change)="onChangeAssignee($event.target.value)"
+              class="form-control">
+              <option value="0">Select Assignee</option>
+              <option value="{{user.userId}}" *ngFor="let user of userList">{{user.username}} -
+                {{user.userType}}
+              </option>
+            </select>
+            </div>
+          </div>
+        </div>
+  
+        <div class="root">
+  
+          <div class="board">
+            <div class="board-wrapper">
+              <div class="board-columns">
+                <div cdkDropList cdkDropListOrientation="horizontal" class="board-columns"
+                  (cdkDropListDropped)="dropGrid($event)">
+                  <div cdkDragLockAxis="x" class="board-column" *ngFor="let column of board.columns" cdkDrag>
+                    <div class="column-title" cdkDragHandle>
+                      {{ column.name }}
+                    </div>
+                    <div class="tasks-container" id="{{column.id}}"
+                      [cdkDropListConnectedTo]="['OPEN', 'IN_PROGRESS', 'TESTING', 'DEPLOY']" cdkDropList
+                      [cdkDropListData]="column.tasks" (cdkDropListDropped)="drop($event)">
+                      <div (click)="viewIssue(item)" class="task" id="{{item.id}}" *ngFor="let item of column.tasks"
+                        cdkDrag>
+                        {{ item.title }}
+                        <div>
+                          <span style="float: left;">({{item.type}})</span>
+                          <span style="float: right;">{{item.issueId}}</span> <br/>
+                          <span style="float: right;">{{item.assignee}}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+    </div>
+  </section>
+  

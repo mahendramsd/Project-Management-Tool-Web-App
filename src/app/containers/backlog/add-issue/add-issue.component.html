@@ -1,0 +1,71 @@
+<main>
+  <div class="card-header">
+    <button type="button" class="close" data-dismiss="modal" (click)="activeModal.close('Close click')"
+      aria-label="Close">
+      <span aria-hidden="true">×</span>
+    </button>
+    <h4 class="card-title">Create Issue</h4>
+  </div>
+
+  <div class="open-modal">
+    <div class="card">
+      <div class="card-body">
+
+
+        <form [formGroup]="issueForm" (ngSubmit)="addIssue(issueForm.value)">
+
+          <div class="form-group">
+            <label>Project <span class="required">*</span></label>
+            <select formControlName="projectId" required="required" [(ngModel)] = "selectedProjectId" style="width: 50%;"
+              [ngClass]="{ 'is-invalid': submitted && form.projectId.errors }" class="form-control">
+              <option value="{{project.id}}" *ngFor="let project of projectList">{{project.name}}</option>
+            </select>
+            <span class="error invalid-feedback">Project is required</span>
+          </div>
+
+          <div class="form-group">
+            <label>Issue Type <span class="required">*</span></label>
+            <select formControlName="issueType" required="required" style="width: 50%;" [(ngModel)]="selectedIssueType"
+              [ngClass]="{ 'is-invalid': submitted && form.issueType.errors }" class="form-control">
+              <option value="BUG">Bug</option>
+              <option value="STORY">Story</option>
+              <option value="TASK">Task</option>
+            </select>
+            <span class="error invalid-feedback">Issue Type is required</span>
+          </div>
+
+
+          <div class="form-group">
+            <label>Title <span class="required">*</span></label>
+            <input formControlName="title" type="text" required="required"
+              [ngClass]="{ 'is-invalid': submitted && form.title.errors }" class="form-control"
+              placeholder="Project Name" />
+            <span class="error invalid-feedback">Title is required</span>
+          </div>
+
+
+          <div class="form-group">
+            <label>Assignee</label>
+            <select formControlName="userId" required="required" style="width: 50%;" [(ngModel)] = "selectedUser"
+              class="form-control">
+              <option value="{{user.userId}}" *ngFor="let user of userList">{{user.username}} - {{user.userType}}
+              </option>
+            </select>
+          </div>
+
+          <div class="row">
+            <!-- /.col -->
+            <div class="col-12">
+              <button type="submit" [disabled]="isSubmitButton" class="btn btn-primary btn-block">
+                Add Project
+              </button>
+            </div>
+          </div>
+        </form>
+
+
+      </div>
+
+    </div>
+  </div>
+</main>

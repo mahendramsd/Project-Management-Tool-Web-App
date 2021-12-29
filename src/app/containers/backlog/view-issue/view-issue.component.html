@@ -1,0 +1,94 @@
+<main>
+  <div class="card-header">
+    <button type="button" class="close" data-dismiss="modal" (click)="closeWindow()"
+      aria-label="Close">
+      <span aria-hidden="true">×</span>
+    </button>
+    <h2 class="card-title">{{issue?.issueId}} - {{issue?.title}}</h2>
+  </div>
+
+  <div class="open-modal">
+    <div class="card">
+      <div class="card-body">
+        <div class="row mt-5">
+          <div class="col-md-6">
+            <div class="card card-default">
+              <div class="card-header">
+                <h3 class="card-title">
+                  <i class="fas fa-bullhorn"></i>
+                  Activity - Logs History
+                </h3>
+              </div>
+              <div class="card-body" style="overflow-y: auto; height: 40rem">
+                <div *ngFor="let logs of changeLogs">
+                  <div *ngIf="logs?.type == 'CREATE'" class="callout callout-info">
+                    <h5>{{logs.assigner}} created the issue {{logs.changeOn | date :'medium'}}</h5>
+                    <!-- <p></p> -->
+                  </div>
+
+                  <div *ngIf="logs.type == 'ASSIGN'" class="callout callout-success">
+                    <h5>{{logs.assigner}} changed the Assignee {{logs.changeOn | date :'medium'}}</h5>
+                    <p>{{logs.fromAssignee}}  <i class="fas fa-angle-double-right ml-5"></i> {{logs.toAssignee}}</p>
+                  </div>
+
+
+                  <div *ngIf="logs.type == 'STATE'" class="callout callout-danger">
+                    <h5>{{logs.assigner}} changed the Status {{logs.changeOn | date :'medium'}}</h5>
+
+                    <strong>{{logs.fromState}} <i class="fas fa-angle-double-right ml-5"></i> {{logs.toState}}</strong>
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+          <div class="col-md-1"></div>
+          <div class="col-md-5">
+
+            <div ngbDropdown class="d-inline-block">
+              <button class="btn btn-outline-primary" id="sortMenu" ngbDropdownToggle>
+                {{selectedState}}</button>
+              <div class="dropdown-menu" aria-labelledby="sortMenu" ngbDropdownMenu>
+                <button class="dropdown-item" *ngFor="let state of states"
+                  (click)="changeState(state)">{{state}}
+                </button>
+              </div>
+            </div>
+            <div class="card card-default mt-3">
+              <div class="card-header">
+                <h3 class="card-title">
+                  <i class="fas fa-info-circle"></i>
+                  Details
+                </h3>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-4">Assignee</div>
+                  <div class="col-md-6">
+                    <select required="required" style="width: 100%;" [(ngModel)]="selectedUser" (change)="onChangeAssignee($event.target.value)"
+                      class="form-control">
+                      <option value="{{user.userId}}" *ngFor="let user of userList">{{user.username}} -
+                        {{user.userType}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="row mt-5">
+                  <div class="col-md-4">Reporter</div>
+                  <div class="col-md-6">
+                    {{issue.assigner}}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</main>
